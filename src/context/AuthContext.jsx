@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const AuthContext = createContext(null)
 
@@ -10,14 +11,18 @@ export function AuthProvider({ children }) {
     JSON.parse(localStorage.getItem('spacewaste_empresa')) || null
   )
 
+  const navigate = useNavigate()
+
   function loginUsuario(dados) {
     setUsuario(dados)
     localStorage.setItem('spacewaste_usuario', JSON.stringify(dados))
+    navigate('/dashboard')
   }
 
   function loginEmpresa(dados) {
     setEmpresa(dados)
     localStorage.setItem('spacewaste_empresa', JSON.stringify(dados))
+    navigate('/empresa')
   }
 
   function logout() {
@@ -25,6 +30,7 @@ export function AuthProvider({ children }) {
     setEmpresa(null)
     localStorage.removeItem('spacewaste_usuario')
     localStorage.removeItem('spacewaste_empresa')
+    navigate('/')
   }
 
   function isAutenticado() {
