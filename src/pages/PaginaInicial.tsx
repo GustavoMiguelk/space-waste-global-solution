@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import ModalLogin from '../components/modais/ModalLogin'
 import ModalCadastro from '../components/modais/ModalCadastro'
-import logo from '../assets/logo.png'
+import logo from '../public/logo.png'
 
 export default function PaginaInicial() {
   const [loginAberto, setLoginAberto] = useState(false)

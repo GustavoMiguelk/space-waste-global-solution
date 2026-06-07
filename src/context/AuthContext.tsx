@@ -1,25 +1,52 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useState, ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const AuthContext = createContext(null)
+interface Usuario {
+  id: number
+  nome: string
+  email: string
+  telefone?: string
+}
 
-export function AuthProvider({ children }) {
-  const [usuario, setUsuario] = useState(
-    JSON.parse(localStorage.getItem('spacewaste_usuario')) || null
+interface Empresa {
+  id: number
+  nomeFantasia: string
+  cnpj: string
+  email: string
+  telefone?: string
+  endereco?: string
+  statusAtivo?: string
+}
+
+interface AuthContextType {
+  usuario: Usuario | null
+  empresa: Empresa | null
+  loginUsuario: (dados: Usuario) => void
+  loginEmpresa: (dados: Empresa) => void
+  logout: () => void
+  isAutenticado: () => boolean
+  isEmpresa: () => boolean
+}
+
+const AuthContext = createContext<AuthContextType | null>(null)
+
+export function AuthProvider({ children }: { children: ReactNode }) {
+  const [usuario, setUsuario] = useState<Usuario | null>(
+    JSON.parse(localStorage.getItem('spacewaste_usuario') || 'null')
   )
-  const [empresa, setEmpresa] = useState(
-    JSON.parse(localStorage.getItem('spacewaste_empresa')) || null
+  const [empresa, setEmpresa] = useState<Empresa | null>(
+    JSON.parse(localStorage.getItem('spacewaste_empresa') || 'null')
   )
 
   const navigate = useNavigate()
 
-  function loginUsuario(dados) {
+  function loginUsuario(dados: Usuario) {
     setUsuario(dados)
     localStorage.setItem('spacewaste_usuario', JSON.stringify(dados))
     navigate('/dashboard')
   }
 
-  function loginEmpresa(dados) {
+  function loginEmpresa(dados: Empresa) {
     setEmpresa(dados)
     localStorage.setItem('spacewaste_empresa', JSON.stringify(dados))
     navigate('/empresa')
@@ -57,5 +84,7 @@ export function AuthProvider({ children }) {
 }
 
 export function useAuth() {
-  return useContext(AuthContext)
+  const context = useContext(AuthContext)
+  if (!context) throw new Error('useAuth deve ser usado dentro de AuthProvider')
+  return context
 }
