@@ -1,14 +1,81 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useAuth } from '../context/AuthContext'
+import { api } from '../services/api'
 
 interface ModalState {
   logout: boolean
 }
 
+interface Descarte {
+  id: number
+  idUsuario: number
+  descricao: string
+  status: 'PENDENTE' | 'EM_COLETA' | 'CONCLUIDO'
+  pesoEstimado?: number
+  dataDescarte?: string
+  latitude?: number
+  longitude?: number
+  imagemUrl?: string
+  idCategoria?: number
+}
+
+interface Metricas {
+  total: number
+  pendentes: number
+  emColeta: number
+  concluidos: number
+}
+
+interface CardMetricaProps {
+  emoji: string
+  label: string
+  valor: number
+  cor: string
+  carregando: boolean
+}
+
+function CardMetrica({ emoji, label, valor, cor, carregando }: CardMetricaProps) {
+  return (
+    <div
+      className="rounded-2xl border p-4"
+      style={{ borderColor: 'var(--color-border)', backgroundColor: 'var(--color-surface)' }}
+    >
+      <div className="flex items-center gap-2 mb-2">
+        <span className="text-lg">{emoji}</span>
+        <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>{label}</p>
+      </div>
+      {carregando ? (
+        <div className="h-7 w-10 rounded-lg animate-pulse" style={{ backgroundColor: 'var(--color-surface-2)' }} />
+      ) : (
+        <p className={`text-2xl font-bold ${cor}`}>{valor}</p>
+      )}
+    </div>
+  )
+}
+
 export default function DashboardUsuario() {
   const { usuario, logout } = useAuth()
   const [modais, setModais] = useState<ModalState>({ logout: false })
+  const [descartes, setDescartes] = useState<Descarte[]>([])
+  const [carregando, setCarregando] = useState(true)
+
+  const metricas: Metricas = {
+    total: descartes.length,
+    pendentes: descartes.filter(d => d.status === 'PENDENTE').length,
+    emColeta: descartes.filter(d => d.status === 'EM_COLETA').length,
+    concluidos: descartes.filter(d => d.status === 'CONCLUIDO').length,
+  }
+
+  useEffect(() => {
+    api.get('/descartes')
+      .then((todos: Descarte[]) => {
+        const meus = todos.filter(d => d.idUsuario === usuario?.id)
+        setDescartes(meus)
+      })
+      .catch(() => {})
+      .finally(() => setCarregando(false))
+  }, [])
 
   function abrirModal(modal: keyof ModalState) {
     setModais(prev => ({ ...prev, [modal]: true }))
@@ -29,10 +96,9 @@ export default function DashboardUsuario() {
         }}
       >
         <div className="mx-auto max-w-7xl flex items-center justify-between px-4 py-3">
-
           <div className="flex items-center gap-3">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-green-500/10 text-lg">
-              
+              🌍
             </div>
             <span className="text-sm font-bold" style={{ color: 'var(--color-primary)' }}>
               SpaceWaste
@@ -71,6 +137,18 @@ export default function DashboardUsuario() {
           <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
             Gerencie seus descartes e acompanhe as coletas
           </p>
+        </motion.div>
+
+        <motion.div
+          className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.05 }}
+        >
+          <CardMetrica emoji="📦" label="Total" valor={metricas.total} cor="text-white" carregando={carregando} />
+          <CardMetrica emoji="⏳" label="Pendentes" valor={metricas.pendentes} cor="text-yellow-400" carregando={carregando} />
+          <CardMetrica emoji="🚛" label="Em coleta" valor={metricas.emColeta} cor="text-blue-400" carregando={carregando} />
+          <CardMetrica emoji="✅" label="Concluídos" valor={metricas.concluidos} cor="text-green-400" carregando={carregando} />
         </motion.div>
       </div>
 
