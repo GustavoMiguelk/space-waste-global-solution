@@ -86,6 +86,12 @@ export default function DashboardUsuario() {
     ? [localizacao.lat, localizacao.lon]
     : [-23.550520, -46.633308]
 
+  const [filtroStatus, setFiltroStatus] = useState<'TODOS' | 'PENDENTE' | 'EM_COLETA' | 'CONCLUIDO'>('TODOS')
+
+  const descartesFiltrados = filtroStatus === 'TODOS'
+  ? descartes
+  : descartes.filter(d => d.status === filtroStatus)
+
   useEffect(() => {
     obterLocalizacao()
     api.get('/descartes')
@@ -115,6 +121,13 @@ export default function DashboardUsuario() {
   function fecharModal(modal: keyof ModalState) {
     setModais(prev => ({ ...prev, [modal]: false }))
   }
+
+ function formatarData(data?: string): string {
+  if (!data) return '—'
+  return new Date(data).toLocaleDateString('pt-BR', {
+    day: '2-digit', month: '2-digit', year: 'numeric'
+  })
+ }
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: 'var(--color-bg)' }}>
@@ -232,6 +245,103 @@ export default function DashboardUsuario() {
           </div>
         </motion.div>
       </div>
+
+    {/* Lista de descartes */}
+<motion.div
+  className="mt-6 rounded-2xl border"
+  style={{ borderColor: 'var(--color-border)', backgroundColor: 'var(--color-surface)' }}
+  initial={{ opacity: 0, y: 10 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 0.15 }}
+>
+  {/* Cabeçalho */}
+  <div
+    className="flex items-center justify-between px-4 py-3 border-b"
+    style={{ borderColor: 'var(--color-border)' }}
+  >
+    <p className="text-sm font-semibold" style={{ color: 'var(--color-text)' }}>
+      🗑️ Meus Descartes
+    </p>
+  </div>
+
+  {/* Filtros */}
+  <div
+    className="flex gap-2 overflow-x-auto px-4 py-3 border-b"
+    style={{ borderColor: 'var(--color-border)' }}
+  >
+    {(['TODOS', 'PENDENTE', 'EM_COLETA', 'CONCLUIDO'] as const).map(status => (
+      <button
+        key={status}
+        onClick={() => setFiltroStatus(status)}
+        className="shrink-0 rounded-lg px-3 py-1 text-xs font-medium transition"
+        style={{
+          backgroundColor: filtroStatus === status ? 'var(--color-primary)' : 'var(--color-surface-2)',
+          color: filtroStatus === status ? 'white' : 'var(--color-text-muted)',
+        }}
+      >
+        {status === 'TODOS' ? 'Todos' : status === 'EM_COLETA' ? 'Em Coleta' : status.charAt(0) + status.slice(1).toLowerCase()}
+      </button>
+    ))}
+  </div>
+
+  {/* Itens */}
+  <div className="max-h-80 overflow-y-auto">
+    {carregando ? (
+      <div className="flex items-center justify-center py-10">
+        <motion.div
+          className="w-8 h-8 rounded-full border-2 border-green-400/30 border-t-green-400"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+        />
+      </div>
+    ) : descartesFiltrados.length === 0 ? (
+      <div className="flex flex-col items-center gap-2 py-10">
+        <span className="text-3xl">📭</span>
+        <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
+          Nenhum descarte encontrado
+        </p>
+      </div>
+    ) : (
+      descartesFiltrados.map((descarte, idx) => (
+        <motion.div
+          key={descarte.id}
+          initial={{ opacity: 0, y: 5 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: idx * 0.03 }}
+          className="flex items-center justify-between px-4 py-3 border-b cursor-pointer transition hover:opacity-80"
+          style={{ borderColor: 'var(--color-border)' }}
+        >
+          <div className="flex items-center gap-3 min-w-0">
+            <div
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-sm"
+              style={{ backgroundColor: 'var(--color-surface-2)' }}
+            >
+              🗑️
+            </div>
+            <div className="min-w-0">
+              <p className="truncate text-sm font-medium" style={{ color: 'var(--color-text)' }}>
+                {descarte.descricao}
+              </p>
+              <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
+                {formatarData(descarte.dataDescarte)} · {descarte.pesoEstimado ? `${descarte.pesoEstimado}kg` : '—'}
+              </p>
+            </div>
+          </div>
+          <span
+            className="shrink-0 ml-2 rounded-full border px-2 py-0.5 text-[10px] font-medium"
+            style={{
+              backgroundColor: descarte.status === 'CONCLUIDO' ? 'rgba(34,197,94,0.1)' : descarte.status === 'EM_COLETA' ? 'rgba(96,165,250,0.1)' : 'rgba(250,204,21,0.1)',
+              color: descarte.status === 'CONCLUIDO' ? '#4ade80' : descarte.status === 'EM_COLETA' ? '#60a5fa' : '#facc15',
+              borderColor: descarte.status === 'CONCLUIDO' ? 'rgba(34,197,94,0.2)' : descarte.status === 'EM_COLETA' ? 'rgba(96,165,250,0.2)' : 'rgba(250,204,21,0.2)',
+            }}
+          >
+            {descarte.status === 'EM_COLETA' ? 'Em Coleta' : descarte.status.charAt(0) + descarte.status.slice(1).toLowerCase()}
+          </span>
+        </motion.div>
+      ))
+    )}
+  </div>
+</motion.div>
 
       {/* Modal logout */}
       {modais.logout && (
