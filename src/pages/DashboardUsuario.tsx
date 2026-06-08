@@ -10,6 +10,7 @@ import markerShadow from 'leaflet/dist/images/marker-shadow.png'
 import logo from '../public/logo.png'
 import ModalRegistroDescarte from '../components/modais/ModalRegistroDescarte'
 import ModalResultadoIA from '../components/modais/ModalResultadoIA'
+import ModalDetalhesDescarte from '../components/modais/ModalDetalheDescarte'
 
 delete (L.Icon.Default.prototype as any)._getIconUrl
 L.Icon.Default.mergeOptions({ iconUrl: markerIcon, shadowUrl: markerShadow })
@@ -89,6 +90,7 @@ export default function DashboardUsuario() {
   const [notificacoes, setNotificacoes] = useState<Notificacao[]>([])
   const [modalRegistro, setModalRegistro] = useState(false)
   const [modalIA, setModalIA] = useState({ aberto: false, imagemUrl: '', descricao: '' })
+  const [modalDetalhes, setModalDetalhes] = useState<{ aberto: boolean; descarte: any }>({ aberto: false, descarte: null })
   const metricas: Metricas = {
     total: descartes.length,
     pendentes: descartes.filter(d => d.status === 'PENDENTE').length,
@@ -412,6 +414,7 @@ const notificacoesNaoLidas = notificacoes.filter(n => n.lida === 'N').length
             transition={{ delay: idx * 0.03 }}
             className="flex items-center justify-between px-4 py-3 border-b cursor-pointer transition hover:opacity-80"
             style={{ borderColor: 'var(--color-border)' }}
+              onClick={() => setModalDetalhes({ aberto: true, descarte })}
           >
             <div className="flex items-center gap-3 min-w-0">
               <div
@@ -483,11 +486,16 @@ const notificacoesNaoLidas = notificacoes.filter(n => n.lida === 'N').length
           </div>
         </div>
       )}
-      <ModalResultadoIA
+       <ModalResultadoIA
         aberto={modalIA.aberto}
         imagemUrl={modalIA.imagemUrl}
         descricao={modalIA.descricao}
         onFechar={() => setModalIA({ aberto: false, imagemUrl: '', descricao: '' })}
+        />
+        <ModalDetalhesDescarte
+        aberto={modalDetalhes.aberto}
+        descarte={modalDetalhes.descarte}
+        onFechar={() => setModalDetalhes({ aberto: false, descarte: null })}
         />
 
     </div>
