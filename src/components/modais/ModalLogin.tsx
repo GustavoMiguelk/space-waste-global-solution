@@ -4,7 +4,13 @@ import { useAuth } from '../../context/AuthContext'
 import { api } from '../../services/api'
 import ModalErro from './ModalErro'
 
-export default function ModalLogin({ aberto, onFechar, onAbrirCadastro }) {
+interface ModalLoginProps {
+  aberto: boolean
+  onFechar: () => void
+  onAbrirCadastro: () => void
+}
+
+export default function ModalLogin({ aberto, onFechar, onAbrirCadastro }: ModalLoginProps) {
   const { loginUsuario, loginEmpresa } = useAuth()
 
   const [tipo, setTipo] = useState('usuario')
@@ -13,11 +19,11 @@ export default function ModalLogin({ aberto, onFechar, onAbrirCadastro }) {
   const [carregando, setCarregando] = useState(false)
   const [erro, setErro] = useState({ aberto: false, mensagem: '' })
 
-  function abrirErro(mensagem) {
+    function abrirErro(mensagem: string) {
     setErro({ aberto: true, mensagem })
   }
 
-  async function handleLogin(e) {
+  async function handleLogin(e: React.SyntheticEvent) {
     e.preventDefault()
 
     if (!email || !senha) {
@@ -31,7 +37,7 @@ export default function ModalLogin({ aberto, onFechar, onAbrirCadastro }) {
       const dados = await api.get(endpoint)
 
       const encontrado = dados.find(
-        (item) => item.email === email && item.senha === senha
+        (item: any) => item.email === email && item.senha === senha
       )
 
       if (!encontrado) {

@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import ModalLogin from '../components/modais/ModalLogin'
 import ModalCadastro from '../components/modais/ModalCadastro'
-import logo from '../assets/logo.png'
 
 export default function PaginaInicial() {
   const [loginAberto, setLoginAberto] = useState(false)
@@ -12,11 +11,10 @@ export default function PaginaInicial() {
     <div className="min-h-screen bg-[var(--color-bg)]">
 
       {/* NAVBAR */}
-      <nav className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-8 py-4 border-b border-[var(--color-border)] bg-[var(--color-bg)]/80 backdrop-blur-md">
+      <nav className="fixed top-0 left-0 right-0 z-40 h-27 flex items-center justify-between px-4 border-b border-[var(--color-border)] bg-[var(--color-bg)]/80 backdrop-blur-md">
         <div className="flex items-center gap-3">
-          <img src={logo} alt="SpaceWaste" className="h-10" />
+        <img src="/logo.png" alt="SpaceWaste" className="h-35 w-auto object-contain" />
         </div>
-
         <div className="hidden md:flex items-center gap-8 text-sm text-[var(--color-text-muted)]">
           <a href="#solucao" className="hover:text-[var(--color-primary)] transition">Solução</a>
           <a href="#sobre" className="hover:text-[var(--color-primary)] transition">Sobre</a>

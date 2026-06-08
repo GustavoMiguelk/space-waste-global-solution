@@ -1,8 +1,14 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { useAuth } from './context/AuthContext'
+import { ReactNode } from 'react'
 import PaginaInicial from './pages/PaginaInicial'
+import DashboardUsuario from './pages/DashboardUsuario'
 
-function RotaProtegida({ children }) {
+interface RotaProtegidaProps {
+  children: ReactNode
+}
+
+function RotaProtegida({ children }: RotaProtegidaProps) {
   const { isAutenticado } = useAuth()
   return isAutenticado() ? children : <Navigate to="/" replace />
 }
@@ -12,12 +18,7 @@ function App() {
     <Routes>
       <Route path="/" element={<PaginaInicial />} />
       <Route
-        path="/dashboard"
-        element={
-          <RotaProtegida>
-            <div className="text-white p-8">Dashboard do Usuário — em breve</div>
-          </RotaProtegida>
-        }
+        path="dashboard" element={<RotaProtegida><DashboardUsuario /></RotaProtegida>}
       />
       <Route
         path="/empresa"

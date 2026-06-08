@@ -1,7 +1,12 @@
 import { motion, AnimatePresence } from 'framer-motion'
 
-export default function ModalErro({ aberto, onFechar, mensagem }) {
-  return (
+interface ModalErroProps {
+  aberto: boolean
+  onFechar: () => void
+  mensagem?: string
+}
+
+export default function ModalErro({ aberto, onFechar, mensagem }: ModalErroProps) {  return (
     <AnimatePresence>
       {aberto && (
         <motion.div
