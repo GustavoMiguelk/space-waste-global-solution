@@ -11,6 +11,7 @@ import logo from '../public/logo.png'
 import ModalRegistroDescarte from '../components/modais/ModalRegistroDescarte'
 import ModalResultadoIA from '../components/modais/ModalResultadoIA'
 import ModalDetalhesDescarte from '../components/modais/ModalDetalheDescarte'
+import ModalPerfil from '../components/modais/ModalPerfil'
 
 delete (L.Icon.Default.prototype as any)._getIconUrl
 L.Icon.Default.mergeOptions({ iconUrl: markerIcon, shadowUrl: markerShadow })
@@ -91,6 +92,7 @@ export default function DashboardUsuario() {
   const [modalRegistro, setModalRegistro] = useState(false)
   const [modalIA, setModalIA] = useState({ aberto: false, imagemUrl: '', descricao: '' })
   const [modalDetalhes, setModalDetalhes] = useState<{ aberto: boolean; descarte: any }>({ aberto: false, descarte: null })
+  const [modalPerfil, setModalPerfil] = useState(false)
   const metricas: Metricas = {
     total: descartes.length,
     pendentes: descartes.filter(d => d.status === 'PENDENTE').length,
@@ -175,13 +177,14 @@ const notificacoesNaoLidas = notificacoes.filter(n => n.lida === 'N').length
         <img src="/logo.png" alt="SpaceWaste" className="h-30 w-auto object-contain" />
          </div>
           <div className="flex items-center gap-2">
-            <div
-              className="flex items-center gap-2 rounded-lg border px-3 py-2 text-sm"
-              style={{ borderColor: 'var(--color-border)', color: 'var(--color-text)' }}
-            >
-              <span>👤</span>
-              <span className="hidden sm:inline">{usuario?.nome?.split(' ')[0]}</span>
-            </div>
+            <button
+                onClick={() => setModalPerfil(true)}
+                className="flex items-center gap-2 rounded-lg border px-3 py-2 text-sm transition hover:opacity-80"
+                style={{ borderColor: 'var(--color-border)', color: 'var(--color-text)' }}
+                >
+                <span>👤</span>
+                <span className="hidden sm:inline">{usuario?.nome?.split(' ')[0]}</span>
+                </button>
             <button
               onClick={() => abrirModal('logout')}
               className="flex h-9 w-9 items-center justify-center rounded-lg border transition hover:opacity-80"
@@ -497,7 +500,10 @@ const notificacoesNaoLidas = notificacoes.filter(n => n.lida === 'N').length
         descarte={modalDetalhes.descarte}
         onFechar={() => setModalDetalhes({ aberto: false, descarte: null })}
         />
-
+        <ModalPerfil
+        aberto={modalPerfil}
+        onFechar={() => setModalPerfil(false)}
+        />
     </div>
   )
 }
