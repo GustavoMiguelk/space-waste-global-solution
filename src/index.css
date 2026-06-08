@@ -39,4 +39,9 @@
     background: var(--color-secondary);
     border-radius: 3px;
   }
+
+  .leaflet-container {
+  z-index: 0;
+}
+
 }

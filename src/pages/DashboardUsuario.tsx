@@ -8,6 +8,7 @@ import 'leaflet/dist/leaflet.css'
 import markerIcon from 'leaflet/dist/images/marker-icon.png'
 import markerShadow from 'leaflet/dist/images/marker-shadow.png'
 import logo from '../public/logo.png'
+import ModalRegistroDescarte from '../components/modais/ModalRegistroDescarte'
 
 delete (L.Icon.Default.prototype as any)._getIconUrl
 L.Icon.Default.mergeOptions({ iconUrl: markerIcon, shadowUrl: markerShadow })
@@ -85,6 +86,7 @@ export default function DashboardUsuario() {
   const [descartesProximos, setDescartesProximos] = useState<Descarte[]>([])
   const [abaAtiva, setAbaAtiva] = useState<'descartes' | 'notificacoes'>('descartes')
   const [notificacoes, setNotificacoes] = useState<Notificacao[]>([])
+  const [modalRegistro, setModalRegistro] = useState(false)
   const metricas: Metricas = {
     total: descartes.length,
     pendentes: descartes.filter(d => d.status === 'PENDENTE').length,
@@ -300,9 +302,9 @@ const notificacoesNaoLidas = notificacoes.filter(n => n.lida === 'N').length
     </div>
 
     <button
+    onClick={() => setModalRegistro(true)}
         className="flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-semibold text-white transition hover:opacity-90"
-        style={{ backgroundColor: 'var(--color-primary)' }}
-    >
+        style={{ backgroundColor: 'var(--color-primary)' }}>
         + Registrar
     </button>
     </div>
@@ -443,8 +445,13 @@ const notificacoesNaoLidas = notificacoes.filter(n => n.lida === 'N').length
  )}
 
 </motion.div>
-
-      {/* Modal logout */}
+    <ModalRegistroDescarte
+        aberto={modalRegistro}
+        onFechar={() => setModalRegistro(false)}
+        onDescarteRegistrado={(descarte, imagemUrl, descricao) => {
+            setDescartes(prev => [descarte, ...prev])
+        }}
+        />
       {modais.logout && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
           <div

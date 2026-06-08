@@ -1,6 +1,6 @@
 const BASE_URL = 'https://space-waste-api.onrender.com/api'
 
-async function requisitar(endpoint, opcoes = {}) {
+async function requisitar(endpoint: string, opcoes: any = {}) {
   const resposta = await fetch(`${BASE_URL}${endpoint}`, {
     headers: {
       'Content-Type': 'application/json',
@@ -18,16 +18,16 @@ async function requisitar(endpoint, opcoes = {}) {
 }
 
 export const api = {
-  get: (endpoint) => requisitar(endpoint),
-  post: (endpoint, corpo) => requisitar(endpoint, {
+  get: (endpoint: string) => requisitar(endpoint),
+  post: (endpoint: string, corpo: any) => requisitar(endpoint, {
     method: 'POST',
     body: JSON.stringify(corpo),
   }),
-  put: (endpoint, corpo) => requisitar(endpoint, {
+  put: (endpoint: string, corpo: any) => requisitar(endpoint, {
     method: 'PUT',
     body: JSON.stringify(corpo),
   }),
-  delete: (endpoint) => requisitar(endpoint, {
+  delete: (endpoint: string) => requisitar(endpoint, {
     method: 'DELETE',
   }),
 }
