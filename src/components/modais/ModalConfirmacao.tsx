@@ -1,7 +1,13 @@
 import { motion, AnimatePresence } from 'framer-motion'
 
-export default function ModalConfirmacao({ aberto, onFechar, onConfirmar, mensagem }) {
-  return (
+interface ModalConfirmacaoProps {
+  aberto: boolean
+  onFechar: () => void
+  onConfirmar: () => void
+  mensagem?: string
+}
+
+export default function ModalConfirmacao({ aberto, onFechar, onConfirmar, mensagem }: ModalConfirmacaoProps) {  return (
     <AnimatePresence>
       {aberto && (
         <motion.div

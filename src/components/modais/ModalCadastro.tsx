@@ -3,8 +3,13 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { api } from '../../services/api'
 import ModalErro from './ModalErro'
 
-export default function ModalCadastro({ aberto, onFechar, onAbrirLogin }) {
-  const [tipo, setTipo] = useState('usuario')
+interface ModalCadastroProps {
+  aberto: boolean
+  onFechar: () => void
+  onAbrirLogin: () => void
+}
+
+export default function ModalCadastro({ aberto, onFechar, onAbrirLogin }: ModalCadastroProps) {  const [tipo, setTipo] = useState('usuario')
   const [carregando, setCarregando] = useState(false)
   const [erro, setErro] = useState({ aberto: false, mensagem: '' })
 
@@ -17,11 +22,11 @@ export default function ModalCadastro({ aberto, onFechar, onAbrirLogin }) {
     senha: '', telefone: '', endereco: '',
   })
 
-  function abrirErro(mensagem) {
+   function abrirErro(mensagem: string) {
     setErro({ aberto: true, mensagem })
   }
 
-  async function handleCadastro(e) {
+  async function handleCadastro(e: React.SyntheticEvent) {
     e.preventDefault()
     setCarregando(true)
 
