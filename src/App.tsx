@@ -3,6 +3,7 @@ import { useAuth } from './context/AuthContext'
 import { ReactNode } from 'react'
 import PaginaInicial from './pages/PaginaInicial'
 import DashboardUsuario from './pages/DashboardUsuario'
+import DashboardEmpresa from './pages/DashboardEmpresa'
 
 interface RotaProtegidaProps {
   children: ReactNode
