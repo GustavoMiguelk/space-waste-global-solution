@@ -9,6 +9,7 @@ import markerIcon from 'leaflet/dist/images/marker-icon.png'
 import markerShadow from 'leaflet/dist/images/marker-shadow.png'
 import logo from '../public/logo.png'
 import ModalRegistroDescarte from '../components/modais/ModalRegistroDescarte'
+import ModalResultadoIA from '../components/modais/ModalResultadoIA'
 
 delete (L.Icon.Default.prototype as any)._getIconUrl
 L.Icon.Default.mergeOptions({ iconUrl: markerIcon, shadowUrl: markerShadow })
@@ -87,6 +88,7 @@ export default function DashboardUsuario() {
   const [abaAtiva, setAbaAtiva] = useState<'descartes' | 'notificacoes'>('descartes')
   const [notificacoes, setNotificacoes] = useState<Notificacao[]>([])
   const [modalRegistro, setModalRegistro] = useState(false)
+  const [modalIA, setModalIA] = useState({ aberto: false, imagemUrl: '', descricao: '' })
   const metricas: Metricas = {
     total: descartes.length,
     pendentes: descartes.filter(d => d.status === 'PENDENTE').length,
@@ -449,7 +451,8 @@ const notificacoesNaoLidas = notificacoes.filter(n => n.lida === 'N').length
         aberto={modalRegistro}
         onFechar={() => setModalRegistro(false)}
         onDescarteRegistrado={(descarte, imagemUrl, descricao) => {
-            setDescartes(prev => [descarte, ...prev])
+        setDescartes(prev => [descarte, ...prev])
+        setModalIA({ aberto: true, imagemUrl, descricao })
         }}
         />
       {modais.logout && (
@@ -480,6 +483,12 @@ const notificacoesNaoLidas = notificacoes.filter(n => n.lida === 'N').length
           </div>
         </div>
       )}
+      <ModalResultadoIA
+        aberto={modalIA.aberto}
+        imagemUrl={modalIA.imagemUrl}
+        descricao={modalIA.descricao}
+        onFechar={() => setModalIA({ aberto: false, imagemUrl: '', descricao: '' })}
+        />
 
     </div>
   )
