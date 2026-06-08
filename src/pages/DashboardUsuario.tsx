@@ -7,6 +7,7 @@ import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import markerIcon from 'leaflet/dist/images/marker-icon.png'
 import markerShadow from 'leaflet/dist/images/marker-shadow.png'
+import logo from '../public/logo.png'
 
 delete (L.Icon.Default.prototype as any)._getIconUrl
 L.Icon.Default.mergeOptions({ iconUrl: markerIcon, shadowUrl: markerShadow })
@@ -48,6 +49,14 @@ interface Localizacao {
   lon: number
 }
 
+interface Notificacao {
+  id: number
+  idUsuario: number
+  mensagem: string
+  lida: 'S' | 'N'
+  dataEnvio?: string
+}
+
 function CardMetrica({ emoji, label, valor, cor, carregando }: CardMetricaProps) {
   return (
     <div
@@ -74,7 +83,8 @@ export default function DashboardUsuario() {
   const [carregando, setCarregando] = useState(true)
   const [localizacao, setLocalizacao] = useState<Localizacao | null>(null)
   const [descartesProximos, setDescartesProximos] = useState<Descarte[]>([])
-
+  const [abaAtiva, setAbaAtiva] = useState<'descartes' | 'notificacoes'>('descartes')
+  const [notificacoes, setNotificacoes] = useState<Notificacao[]>([])
   const metricas: Metricas = {
     total: descartes.length,
     pendentes: descartes.filter(d => d.status === 'PENDENTE').length,
@@ -101,6 +111,12 @@ export default function DashboardUsuario() {
       })
       .catch(() => {})
       .finally(() => setCarregando(false))
+      api.get('/notificacoes')
+      .then((todas: Notificacao[]) => {
+            const minhas = todas.filter(n => n.idUsuario === usuario?.id)
+            setNotificacoes(minhas)
+        })
+        .catch(() => {})
   }, [])
 
   function obterLocalizacao() {
@@ -129,27 +145,29 @@ export default function DashboardUsuario() {
   })
  }
 
+async function marcarLida(id: number) {
+  try {
+    await api.put(`/notificacoes/${id}/ler`, {})
+    setNotificacoes(prev => prev.map(n => n.id === id ? { ...n, lida: 'S' } : n))
+  } catch {}
+}
+
+const notificacoesNaoLidas = notificacoes.filter(n => n.lida === 'N').length
+
   return (
     <div className="min-h-screen" style={{ backgroundColor: 'var(--color-bg)' }}>
 
-      {/* Navbar */}
-      <nav
-        className="sticky top-0 z-40 border-b"
+        <nav
+        className="sticky top-0 z-40 h-20 border-b"
         style={{
-          backgroundColor: 'var(--color-surface)',
-          borderColor: 'var(--color-border)',
+            backgroundColor: 'var(--color-surface)',
+            borderColor: 'var(--color-border)',
         }}
-      >
-        <div className="mx-auto max-w-7xl flex items-center justify-between px-4 py-3">
+        >
+        <div className="mx-auto max-w-7xl h-full flex items-center justify-between px-1">
           <div className="flex items-center gap-3">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-green-500/10 text-lg">
-              🌍
-            </div>
-            <span className="text-sm font-bold" style={{ color: 'var(--color-primary)' }}>
-              SpaceWaste
-            </span>
-          </div>
-
+        <img src="/logo.png" alt="SpaceWaste" className="h-30 w-auto object-contain" />
+         </div>
           <div className="flex items-center gap-2">
             <div
               className="flex items-center gap-2 rounded-lg border px-3 py-2 text-sm"
@@ -158,7 +176,6 @@ export default function DashboardUsuario() {
               <span>👤</span>
               <span className="hidden sm:inline">{usuario?.nome?.split(' ')[0]}</span>
             </div>
-
             <button
               onClick={() => abrirModal('logout')}
               className="flex h-9 w-9 items-center justify-center rounded-lg border transition hover:opacity-80"
@@ -254,93 +271,177 @@ export default function DashboardUsuario() {
   animate={{ opacity: 1, y: 0 }}
   transition={{ delay: 0.15 }}
 >
-  {/* Cabeçalho */}
-  <div
+{/* Cabeçalho com abas */}
+    <div
     className="flex items-center justify-between px-4 py-3 border-b"
     style={{ borderColor: 'var(--color-border)' }}
-  >
-    <p className="text-sm font-semibold" style={{ color: 'var(--color-text)' }}>
-      🗑️ Meus Descartes
-    </p>
-  </div>
-
-  {/* Filtros */}
-  <div
-    className="flex gap-2 overflow-x-auto px-4 py-3 border-b"
-    style={{ borderColor: 'var(--color-border)' }}
-  >
-    {(['TODOS', 'PENDENTE', 'EM_COLETA', 'CONCLUIDO'] as const).map(status => (
-      <button
-        key={status}
-        onClick={() => setFiltroStatus(status)}
-        className="shrink-0 rounded-lg px-3 py-1 text-xs font-medium transition"
+    >
+    <div className="flex gap-1">
+        <button
+        onClick={() => setAbaAtiva('descartes')}
+        className="rounded-lg px-3 py-1.5 text-xs font-medium transition"
         style={{
-          backgroundColor: filtroStatus === status ? 'var(--color-primary)' : 'var(--color-surface-2)',
-          color: filtroStatus === status ? 'white' : 'var(--color-text-muted)',
+            backgroundColor: abaAtiva === 'descartes' ? 'var(--color-surface-2)' : 'transparent',
+            color: abaAtiva === 'descartes' ? 'var(--color-text)' : 'var(--color-text-muted)',
         }}
-      >
-        {status === 'TODOS' ? 'Todos' : status === 'EM_COLETA' ? 'Em Coleta' : status.charAt(0) + status.slice(1).toLowerCase()}
-      </button>
-    ))}
-  </div>
+        >
+        🗑️ Meus Descartes
+        </button>
+        <button
+        onClick={() => setAbaAtiva('notificacoes')}
+        className="rounded-lg px-3 py-1.5 text-xs font-medium transition"
+        style={{
+            backgroundColor: abaAtiva === 'notificacoes' ? 'var(--color-surface-2)' : 'transparent',
+            color: abaAtiva === 'notificacoes' ? 'var(--color-text)' : 'var(--color-text-muted)',
+        }}
+        >
+        🔔 Notificações {notificacoesNaoLidas > 0 && `(${notificacoesNaoLidas})`}
+        </button>
+    </div>
 
-  {/* Itens */}
+    <button
+        className="flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-semibold text-white transition hover:opacity-90"
+        style={{ backgroundColor: 'var(--color-primary)' }}
+    >
+        + Registrar
+    </button>
+    </div>
+
+ {abaAtiva === 'notificacoes' && (
   <div className="max-h-80 overflow-y-auto">
-    {carregando ? (
-      <div className="flex items-center justify-center py-10">
-        <motion.div
-          className="w-8 h-8 rounded-full border-2 border-green-400/30 border-t-green-400"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-        />
-      </div>
-    ) : descartesFiltrados.length === 0 ? (
+    {notificacoes.length === 0 ? (
       <div className="flex flex-col items-center gap-2 py-10">
-        <span className="text-3xl">📭</span>
+        <span className="text-3xl">🔕</span>
         <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
-          Nenhum descarte encontrado
+          Sem notificações
         </p>
       </div>
     ) : (
-      descartesFiltrados.map((descarte, idx) => (
+      notificacoes.map((notif, idx) => (
         <motion.div
-          key={descarte.id}
+          key={notif.id}
           initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: idx * 0.03 }}
-          className="flex items-center justify-between px-4 py-3 border-b cursor-pointer transition hover:opacity-80"
-          style={{ borderColor: 'var(--color-border)' }}
+          className="flex items-start justify-between gap-3 px-4 py-3 border-b"
+          style={{
+            borderColor: 'var(--color-border)',
+            backgroundColor: notif.lida === 'N' ? 'rgba(34,197,94,0.04)' : 'transparent',
+          }}
         >
-          <div className="flex items-center gap-3 min-w-0">
-            <div
-              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-sm"
-              style={{ backgroundColor: 'var(--color-surface-2)' }}
-            >
-              🗑️
-            </div>
+          <div className="flex items-start gap-3 min-w-0">
+            <span className="mt-0.5 text-base shrink-0">
+              {notif.lida === 'N' ? '🔔' : '🔕'}
+            </span>
             <div className="min-w-0">
-              <p className="truncate text-sm font-medium" style={{ color: 'var(--color-text)' }}>
-                {descarte.descricao}
+              <p className="text-sm" style={{ color: 'var(--color-text)' }}>
+                {notif.mensagem}
               </p>
               <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
-                {formatarData(descarte.dataDescarte)} · {descarte.pesoEstimado ? `${descarte.pesoEstimado}kg` : '—'}
+                {formatarData(notif.dataEnvio)}
               </p>
             </div>
           </div>
-          <span
-            className="shrink-0 ml-2 rounded-full border px-2 py-0.5 text-[10px] font-medium"
-            style={{
-              backgroundColor: descarte.status === 'CONCLUIDO' ? 'rgba(34,197,94,0.1)' : descarte.status === 'EM_COLETA' ? 'rgba(96,165,250,0.1)' : 'rgba(250,204,21,0.1)',
-              color: descarte.status === 'CONCLUIDO' ? '#4ade80' : descarte.status === 'EM_COLETA' ? '#60a5fa' : '#facc15',
-              borderColor: descarte.status === 'CONCLUIDO' ? 'rgba(34,197,94,0.2)' : descarte.status === 'EM_COLETA' ? 'rgba(96,165,250,0.2)' : 'rgba(250,204,21,0.2)',
-            }}
-          >
-            {descarte.status === 'EM_COLETA' ? 'Em Coleta' : descarte.status.charAt(0) + descarte.status.slice(1).toLowerCase()}
-          </span>
+          {notif.lida === 'N' && (
+            <button
+              onClick={() => marcarLida(notif.id)}
+              className="shrink-0 rounded-lg px-2 py-1 text-xs transition hover:opacity-80"
+              style={{
+                backgroundColor: 'var(--color-surface-2)',
+                color: 'var(--color-text-muted)',
+              }}
+            >
+              Lida
+            </button>
+          )}
         </motion.div>
       ))
     )}
   </div>
+ )}
+
+ {abaAtiva === 'descartes' && (
+  <>
+    {/* Filtros */}
+    <div
+      className="flex gap-2 overflow-x-auto px-4 py-3 border-b"
+      style={{ borderColor: 'var(--color-border)' }}
+    >
+      {(['TODOS', 'PENDENTE', 'EM_COLETA', 'CONCLUIDO'] as const).map(status => (
+        <button
+          key={status}
+          onClick={() => setFiltroStatus(status)}
+          className="shrink-0 rounded-lg px-3 py-1 text-xs font-medium transition"
+          style={{
+            backgroundColor: filtroStatus === status ? 'var(--color-primary)' : 'var(--color-surface-2)',
+            color: filtroStatus === status ? 'white' : 'var(--color-text-muted)',
+          }}
+        >
+          {status === 'TODOS' ? 'Todos' : status === 'EM_COLETA' ? 'Em Coleta' : status.charAt(0) + status.slice(1).toLowerCase()}
+        </button>
+      ))}
+    </div>
+
+    {/* Itens */}
+    <div className="max-h-80 overflow-y-auto">
+      {carregando ? (
+        <div className="flex items-center justify-center py-10">
+          <motion.div
+            className="w-8 h-8 rounded-full border-2 border-green-400/30 border-t-green-400"
+            animate={{ rotate: 360 }}
+            transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+          />
+        </div>
+      ) : descartesFiltrados.length === 0 ? (
+        <div className="flex flex-col items-center gap-2 py-10">
+          <span className="text-3xl">📭</span>
+          <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
+            Nenhum descarte encontrado
+          </p>
+        </div>
+      ) : (
+        descartesFiltrados.map((descarte, idx) => (
+          <motion.div
+            key={descarte.id}
+            initial={{ opacity: 0, y: 5 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: idx * 0.03 }}
+            className="flex items-center justify-between px-4 py-3 border-b cursor-pointer transition hover:opacity-80"
+            style={{ borderColor: 'var(--color-border)' }}
+          >
+            <div className="flex items-center gap-3 min-w-0">
+              <div
+                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-sm"
+                style={{ backgroundColor: 'var(--color-surface-2)' }}
+              >
+                🗑️
+              </div>
+              <div className="min-w-0">
+                <p className="truncate text-sm font-medium" style={{ color: 'var(--color-text)' }}>
+                  {descarte.descricao}
+                </p>
+                <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
+                  {formatarData(descarte.dataDescarte)} · {descarte.pesoEstimado ? `${descarte.pesoEstimado}kg` : '—'}
+                </p>
+              </div>
+            </div>
+            <span
+              className="shrink-0 ml-2 rounded-full border px-2 py-0.5 text-[10px] font-medium"
+              style={{
+                backgroundColor: descarte.status === 'CONCLUIDO' ? 'rgba(34,197,94,0.1)' : descarte.status === 'EM_COLETA' ? 'rgba(96,165,250,0.1)' : 'rgba(250,204,21,0.1)',
+                color: descarte.status === 'CONCLUIDO' ? '#4ade80' : descarte.status === 'EM_COLETA' ? '#60a5fa' : '#facc15',
+                borderColor: descarte.status === 'CONCLUIDO' ? 'rgba(34,197,94,0.2)' : descarte.status === 'EM_COLETA' ? 'rgba(96,165,250,0.2)' : 'rgba(250,204,21,0.2)',
+              }}
+            >
+              {descarte.status === 'EM_COLETA' ? 'Em Coleta' : descarte.status.charAt(0) + descarte.status.slice(1).toLowerCase()}
+            </span>
+          </motion.div>
+        ))
+      )}
+    </div>
+  </>
+ )}
+
 </motion.div>
 
       {/* Modal logout */}
