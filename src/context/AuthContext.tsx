@@ -9,7 +9,7 @@ interface Usuario {
 }
 
 interface Empresa {
-  id: number
+  idEmpresa: number
   nomeFantasia: string
   cnpj: string
   email: string
