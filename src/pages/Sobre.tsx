@@ -9,14 +9,12 @@ const tecnologias = [
   { nome: 'Oracle Database', emoji: '🗄️', desc: 'Banco de dados relacional empresarial' },
   { nome: 'Leaflet', emoji: '🗺️', desc: 'Mapas interativos com geolocalização' },
   { nome: 'Framer Motion', emoji: '✨', desc: 'Animações fluidas e modernas' },
-  { nome: 'Python + Flask', emoji: '🐍', desc: 'IA para classificação de resíduos' },
 ]
 
 const objetivos = [
   'Combater o descarte irregular de resíduos urbanos',
   'Melhorar a eficiência da coleta seletiva',
   'Facilitar a comunicação entre cidadãos e empresas',
-  'Utilizar inteligência artificial para classificação automática de resíduos',
   'Gerar dashboards ambientais para análise de dados urbanos',
   'Auxiliar órgãos públicos na identificação de regiões críticas',
   'Incentivar práticas sustentáveis e conscientização ambiental',

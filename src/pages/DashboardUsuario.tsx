@@ -9,7 +9,6 @@ import markerIcon from 'leaflet/dist/images/marker-icon.png'
 import markerShadow from 'leaflet/dist/images/marker-shadow.png'
 import logo from '../public/logo.png'
 import ModalRegistroDescarte from '../components/modais/ModalRegistroDescarte'
-import ModalResultadoIA from '../components/modais/ModalResultadoIA'
 import ModalDetalhesDescarte from '../components/modais/ModalDetalheDescarte'
 import ModalPerfil from '../components/modais/ModalPerfil'
 
@@ -482,12 +481,6 @@ const notificacoesNaoLidas = notificacoes.filter(n => n.lida === 'N').length
           </div>
         </div>
       )}
-       <ModalResultadoIA
-        aberto={modalIA.aberto}
-        imagemUrl={modalIA.imagemUrl}
-        descricao={modalIA.descricao}
-        onFechar={() => setModalIA({ aberto: false, imagemUrl: '', descricao: '' })}
-        />
         <ModalDetalhesDescarte
         aberto={modalDetalhes.aberto}
         descarte={modalDetalhes.descarte}

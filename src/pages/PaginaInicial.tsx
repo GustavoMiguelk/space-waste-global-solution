@@ -103,9 +103,9 @@ export default function PaginaInicial() {
                 descricao: 'Cidadãos registram descartes irregulares com localização, foto e categoria do resíduo.',
               },
               {
-                icone: '🤖',
-                titulo: 'IA classifica o resíduo',
-                descricao: 'Nossa inteligência artificial identifica automaticamente o tipo de material e sugere o descarte correto.',
+                icone: '🔔',
+                titulo: 'Empresa é notificada',
+                descricao: 'Empresas parceiras visualizam os descartes disponíveis no mapa e aceitam as coletas em tempo real.',
               },
               {
                 icone: '🚛',
