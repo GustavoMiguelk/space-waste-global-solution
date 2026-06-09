@@ -197,7 +197,6 @@ const notificacoesNaoLidas = notificacoes.filter(n => n.lida === 'N').length
         </div>
       </nav>
 
-      {/* Conteúdo */}
       <div className="mx-auto max-w-7xl px-4 py-6">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
@@ -211,7 +210,6 @@ const notificacoesNaoLidas = notificacoes.filter(n => n.lida === 'N').length
           </p>
         </motion.div>
 
-        {/* Cards de métricas */}
         <motion.div
           className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4"
           initial={{ opacity: 0, y: 10 }}
@@ -224,7 +222,6 @@ const notificacoesNaoLidas = notificacoes.filter(n => n.lida === 'N').length
           <CardMetrica emoji="✅" label="Concluídos" valor={metricas.concluidos} cor="text-green-400" carregando={carregando} />
         </motion.div>
 
-        {/* Mapa */}
         <motion.div
           className="mt-6 rounded-2xl border overflow-hidden"
           style={{ borderColor: 'var(--color-border)', backgroundColor: 'var(--color-surface)' }}
@@ -272,7 +269,6 @@ const notificacoesNaoLidas = notificacoes.filter(n => n.lida === 'N').length
         </motion.div>
       </div>
 
-    {/* Lista de descartes */}
 <motion.div
   className="mt-6 rounded-2xl border"
   style={{ borderColor: 'var(--color-border)', backgroundColor: 'var(--color-surface)' }}
@@ -280,7 +276,6 @@ const notificacoesNaoLidas = notificacoes.filter(n => n.lida === 'N').length
   animate={{ opacity: 1, y: 0 }}
   transition={{ delay: 0.15 }}
 >
-{/* Cabeçalho com abas */}
     <div
     className="flex items-center justify-between px-4 py-3 border-b"
     style={{ borderColor: 'var(--color-border)' }}
@@ -371,7 +366,6 @@ const notificacoesNaoLidas = notificacoes.filter(n => n.lida === 'N').length
 
  {abaAtiva === 'descartes' && (
   <>
-    {/* Filtros */}
     <div
       className="flex gap-2 overflow-x-auto px-4 py-3 border-b"
       style={{ borderColor: 'var(--color-border)' }}
@@ -391,7 +385,6 @@ const notificacoesNaoLidas = notificacoes.filter(n => n.lida === 'N').length
       ))}
     </div>
 
-    {/* Itens */}
     <div className="max-h-80 overflow-y-auto">
       {carregando ? (
         <div className="flex items-center justify-center py-10">

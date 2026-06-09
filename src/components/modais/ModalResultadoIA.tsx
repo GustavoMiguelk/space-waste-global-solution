@@ -64,7 +64,6 @@ export default function ModalResultadoIA({ aberto, onFechar, imagemUrl, descrica
             exit={{ scale: 0.9, opacity: 0, y: 20 }}
             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
           >
-            {/* Cabeçalho */}
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-purple-500/10 text-xl">
@@ -88,7 +87,6 @@ export default function ModalResultadoIA({ aberto, onFechar, imagemUrl, descrica
               </button>
             </div>
 
-            {/* Carregando */}
             {carregando && (
               <div className="flex flex-col items-center gap-4 py-8">
                 <motion.div
@@ -102,7 +100,6 @@ export default function ModalResultadoIA({ aberto, onFechar, imagemUrl, descrica
               </div>
             )}
 
-            {/* Erro */}
             {erro && !carregando && (
               <div className="flex flex-col items-center gap-3 py-6 text-center">
                 <span className="text-3xl">⚠️</span>
@@ -110,14 +107,12 @@ export default function ModalResultadoIA({ aberto, onFechar, imagemUrl, descrica
               </div>
             )}
 
-            {/* Resultado */}
             {resultado && !carregando && (
               <motion.div
                 className="flex flex-col gap-4"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
               >
-                {/* Classificação */}
                 <div className="rounded-xl border p-4" style={{ borderColor: 'var(--color-border)', backgroundColor: 'var(--color-surface-2)' }}>
                   <p className="text-xs uppercase tracking-wide mb-1" style={{ color: 'var(--color-text-muted)' }}>
                     Classificação
@@ -127,7 +122,6 @@ export default function ModalResultadoIA({ aberto, onFechar, imagemUrl, descrica
                   </p>
                 </div>
 
-                {/* Confiança */}
                 {resultado.confianca != null && (
                   <div className="rounded-xl border p-4" style={{ borderColor: 'var(--color-border)', backgroundColor: 'var(--color-surface-2)' }}>
                     <div className="flex items-center justify-between mb-2">
@@ -149,7 +143,6 @@ export default function ModalResultadoIA({ aberto, onFechar, imagemUrl, descrica
                   </div>
                 )}
 
-                {/* Modelo */}
                 {resultado.modeloUtilizado && (
                   <div className="flex items-center justify-between rounded-xl border px-4 py-3" style={{ borderColor: 'var(--color-border)', backgroundColor: 'var(--color-surface-2)' }}>
                     <p className="text-xs uppercase tracking-wide" style={{ color: 'var(--color-text-muted)' }}>Modelo</p>

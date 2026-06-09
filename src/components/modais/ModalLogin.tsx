@@ -73,15 +73,13 @@ export default function ModalLogin({ aberto, onFechar, onAbrirCadastro }: ModalL
               exit={{ scale: 0.9, opacity: 0 }}
               transition={{ type: 'spring', stiffness: 300, damping: 25 }}
             >
-              {/* Logo */}
               <div className="mb-6 flex flex-col items-center gap-2">
-                <img src="/src/assets/logo.png" alt="SpaceWaste" className="h-12" />
+                <img src="../public/logo.png" alt="SpaceWaste" className="h-30" />
                 <p className="text-sm text-[var(--color-text-muted)]">
                   Acesse sua conta
                 </p>
               </div>
 
-              {/* Tipo */}
               <div className="mb-6 flex rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-2)] p-1">
                 {['usuario', 'empresa'].map((t) => (
                   <button
@@ -98,7 +96,6 @@ export default function ModalLogin({ aberto, onFechar, onAbrirCadastro }: ModalL
                 ))}
               </div>
 
-              {/* Formulário */}
               <form onSubmit={handleLogin} className="flex flex-col gap-4">
                 <div className="flex flex-col gap-1.5">
                   <label className="text-sm text-[var(--color-text-muted)]">E-mail</label>

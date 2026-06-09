@@ -1,25 +1,12 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
+import Navbar from '../components/layout/Navbar'
+import Rodape from '../components/layout/Rodape'
 
 export default function Integrantes() {
   return (
     <div className="min-h-screen bg-[var(--color-bg)]">
 
-      {/* NAVBAR */}
-      <nav className="fixed top-0 left-0 right-0 z-40 h-27 flex items-center justify-between px-4 border-b border-[var(--color-border)] bg-[var(--color-bg)]/80 backdrop-blur-md">
-        <Link to="/">
-          <img src="/logo.png" alt="SpaceWaste" className="h-35 w-auto object-contain" />
-        </Link>
-        <div className="hidden md:flex items-center gap-8 text-sm text-[var(--color-text-muted)]">
-          <Link to="/"            className="hover:text-[var(--color-primary)] transition">Início</Link>
-          <Link to="/sobre"       className="hover:text-[var(--color-primary)] transition">Sobre</Link>
-          <Link to="/integrantes" className="text-[var(--color-primary)] font-semibold transition">Integrantes</Link>
-          <Link to="/faq"         className="hover:text-[var(--color-primary)] transition">FAQ</Link>
-          <a href="/#contato"     className="hover:text-[var(--color-primary)] transition">Contato</a>
-        </div>
-      </nav>
-
-      {/* CONTEÚDO — mesmo da seção #integrantes da home */}
       <section className="py-24 px-4 pt-40">
         <div className="max-w-4xl mx-auto">
           <motion.div
@@ -40,7 +27,7 @@ export default function Integrantes() {
               { id: 2, nome: 'Gustavo Miguel Martins de Oliveira', rm: 'RM566666', turma: '1TDSPH', papel: 'Front-end',      foto: '/gustavo.jpg',  github: 'https://github.com/', linkedin: 'https://linkedin.com/in/' },
               { id: 3, nome: 'Mariana de Paula Aguiar',            rm: 'RM566850', turma: '1TDSPH', papel: 'Python & IA',   foto: '/mariana.jpg',  github: 'https://github.com/', linkedin: 'https://linkedin.com/in/' },
             ].map((item, i) => (
-        <Link to={`/integrantes/${item.id}`} key={i}>
+            <Link to={`/integrantes/${item.id}`} key={i}>
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
@@ -59,7 +46,6 @@ export default function Integrantes() {
                 <p className="text-xs text-[var(--color-text-muted)]">{item.turma}</p>
                 <p className="text-xs text-[var(--color-primary)] mt-1">{item.papel}</p>
 
-                {/* Links obrigatórios pelo professor */}
                 <div className="flex justify-center gap-3 mt-4">
                   <a
                     href={item.github}
@@ -84,12 +70,6 @@ export default function Integrantes() {
           </div>
         </div>
       </section>
-
-      {/* FOOTER */}
-      <footer className="py-8 px-4 border-t border-[var(--color-border)] text-center text-sm text-[var(--color-text-muted)]">
-        © 2026 SpaceWaste — FIAP. Todos os direitos reservados.
-      </footer>
-
     </div>
   )
 }

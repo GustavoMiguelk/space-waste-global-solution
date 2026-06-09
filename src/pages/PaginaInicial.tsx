@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import ModalLogin from '../components/modais/ModalLogin'
 import ModalCadastro from '../components/modais/ModalCadastro'
+import Navbar from '../components/layout/Navbar'
+import Rodape from '../components/layout/Rodape'
 
 export default function PaginaInicial() {
   const [loginAberto, setLoginAberto] = useState(false)
@@ -11,19 +13,9 @@ export default function PaginaInicial() {
   return (
     <div className="min-h-screen bg-[var(--color-bg)]">
 
-      {/* NAVBAR */}
-      <nav className="fixed top-0 left-0 right-0 z-40 h-27 flex items-center justify-between px-4 border-b border-[var(--color-border)] bg-[var(--color-bg)]/80 backdrop-blur-md">
-        <Link to="/">
-          <img src="/logo.png" alt="SpaceWaste" className="h-35 w-auto object-contain" />
-        </Link>
-        <div className="hidden md:flex items-center gap-8 text-sm text-[var(--color-text-muted)]">
-          <a href="#solucao"      className="hover:text-[var(--color-primary)] transition">Solução</a>
-          <Link to="/sobre"       className="hover:text-[var(--color-primary)] transition">Sobre</Link>
-          <Link to="/integrantes" className="hover:text-[var(--color-primary)] transition">Integrantes</Link>
-          <Link to="/faq"         className="hover:text-[var(--color-primary)] transition">FAQ</Link>
-          <Link to="/contato"     className="hover:text-[var(--color-primary)] transition">Contato</Link>
-        </div>
-        <div className="flex items-center gap-3">
+    <Navbar
+      acoes={
+        <>
           <button
             onClick={() => setLoginAberto(true)}
             className="px-4 py-2 text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition"
@@ -36,10 +28,10 @@ export default function PaginaInicial() {
           >
             Cadastrar
           </button>
-        </div>
-      </nav>
+        </>
+      }
+    />
 
-      {/* HERO */}
       <section className="min-h-screen flex flex-col items-center justify-center text-center px-4 pt-20">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -60,24 +52,8 @@ export default function PaginaInicial() {
             O SpaceWaste conecta cidadãos, empresas de coleta e órgãos responsáveis
             em um ecossistema digital inteligente para combater o descarte irregular de resíduos.
           </p>
-
-          <div className="flex items-center justify-center gap-3">
-            <button
-              onClick={() => setLoginAberto(true)}
-              className="px-4 py-2 text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition"
-            >
-              Entrar
-            </button>
-            <button
-              onClick={() => setCadastroAberto(true)}
-              className="px-4 py-2 text-sm font-semibold rounded-xl bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary-dark)] transition"
-            >
-              Cadastrar
-            </button>
-          </div>
         </motion.div>
 
-        {/* Métricas */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -101,7 +77,6 @@ export default function PaginaInicial() {
         </motion.div>
       </section>
 
-      {/* SOLUÇÃO */}
       <section id="solucao" className="py-24 px-4 border-t border-[var(--color-border)]">
         <div className="max-w-5xl mx-auto">
           <motion.div
@@ -155,12 +130,6 @@ export default function PaginaInicial() {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="py-8 px-4 border-t border-[var(--color-border)] text-center text-sm text-[var(--color-text-muted)]">
-        © 2026 SpaceWaste — FIAP. Todos os direitos reservados.
-      </footer>
-
-      {/* MODAIS */}
       <ModalLogin
         aberto={loginAberto}
         onFechar={() => setLoginAberto(false)}

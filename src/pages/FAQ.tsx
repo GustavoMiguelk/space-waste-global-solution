@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
-
+import Navbar from '../components/layout/Navbar'
+import Rodape from '../components/layout/Rodape'
 const perguntas = [
   {
     id: 1,
@@ -26,27 +27,10 @@ const perguntas = [
 ]
 
 export default function FAQ() {
-  // controla qual pergunta está aberta (null = nenhuma)
   const [aberta, setAberta] = useState<number | null>(null)
 
   return (
     <div className="min-h-screen bg-[var(--color-bg)]">
-
-      {/* NAVBAR */}
-      <nav className="fixed top-0 left-0 right-0 z-40 h-27 flex items-center justify-between px-4 border-b border-[var(--color-border)] bg-[var(--color-bg)]/80 backdrop-blur-md">
-        <Link to="/">
-          <img src="/logo.png" alt="SpaceWaste" className="h-35 w-auto object-contain" />
-        </Link>
-        <div className="hidden md:flex items-center gap-8 text-sm text-[var(--color-text-muted)]">
-          <Link to="/"            className="hover:text-[var(--color-primary)] transition">Início</Link>
-          <Link to="/sobre"       className="hover:text-[var(--color-primary)] transition">Sobre</Link>
-          <Link to="/integrantes" className="hover:text-[var(--color-primary)] transition">Integrantes</Link>
-          <Link to="/faq"         className="text-[var(--color-primary)] font-semibold transition">FAQ</Link>
-          <a href="/#contato"     className="hover:text-[var(--color-primary)] transition">Contato</a>
-        </div>
-      </nav>
-
-      {/* CONTEÚDO */}
       <section className="py-24 px-4 pt-40">
         <div className="max-w-3xl mx-auto">
           <motion.div
@@ -69,7 +53,6 @@ export default function FAQ() {
                 transition={{ duration: 0.4, delay: i * 0.1 }}
                 className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] overflow-hidden"
               >
-                {/* cabeçalho clicável — abre/fecha a resposta */}
                 <button
                   onClick={() => setAberta(aberta === item.id ? null : item.id)}
                   className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left hover:bg-[var(--color-surface-2)] transition"
@@ -80,7 +63,6 @@ export default function FAQ() {
                   </span>
                 </button>
 
-                {/* resposta com animação de abrir/fechar */}
                 <AnimatePresence initial={false}>
                   {aberta === item.id && (
                     <motion.div
@@ -101,12 +83,6 @@ export default function FAQ() {
           </div>
         </div>
       </section>
-
-      {/* FOOTER */}
-      <footer className="py-8 px-4 border-t border-[var(--color-border)] text-center text-sm text-[var(--color-text-muted)]">
-        © 2026 SpaceWaste — FIAP. Todos os direitos reservados.
-      </footer>
-
     </div>
   )
 }

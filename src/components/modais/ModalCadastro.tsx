@@ -78,15 +78,13 @@ export default function ModalCadastro({ aberto, onFechar, onAbrirLogin }: ModalC
               exit={{ scale: 0.9, opacity: 0 }}
               transition={{ type: 'spring', stiffness: 300, damping: 25 }}
             >
-              {/* Logo */}
-              <div className="mb-6 flex flex-col items-center gap-2">
-                <img src="/src/assets/logo.png" alt="SpaceWaste" className="h-12" />
+              <div className="mb-6 flex flex-col items-center gap-1">
+                <img src="../public/logo.png" alt="SpaceWaste" className="h-30" />
                 <p className="text-sm text-[var(--color-text-muted)]">
                   Crie sua conta
                 </p>
               </div>
 
-              {/* Tipo */}
               <div className="mb-6 flex rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-2)] p-1">
                 {['usuario', 'empresa'].map((t) => (
                   <button
@@ -103,7 +101,6 @@ export default function ModalCadastro({ aberto, onFechar, onAbrirLogin }: ModalC
                 ))}
               </div>
 
-              {/* Formulário */}
               <form onSubmit={handleCadastro} className="flex flex-col gap-4">
                 {tipo === 'usuario' ? (
                   <>

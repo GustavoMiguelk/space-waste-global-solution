@@ -1,5 +1,7 @@
 import { useParams, Link, Navigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import Navbar from '../components/layout/Navbar'
+import Rodape from '../components/layout/Rodape'
 
 interface Integrante {
   id: number
@@ -60,22 +62,7 @@ export default function IntegranteDinamico() {
   return (
     <div className="min-h-screen" style={{ backgroundColor: 'var(--color-bg)' }}>
 
-      {/* NAVBAR */}
-      <nav className="fixed top-0 left-0 right-0 z-40 h-16 flex items-center justify-between px-8 border-b border-[var(--color-border)] bg-[var(--color-bg)]/80 backdrop-blur-md">
-        <Link to="/">
-          <img src="/logo.png" alt="SpaceWaste" className="h-10 w-auto object-contain" />
-        </Link>
-        <div className="hidden md:flex items-center gap-8 text-sm text-[var(--color-text-muted)]">
-          <Link to="/" className="hover:text-[var(--color-primary)] transition">Início</Link>
-          <Link to="/sobre" className="hover:text-[var(--color-primary)] transition">Sobre</Link>
-          <Link to="/integrantes" className="text-[var(--color-primary)] font-semibold transition">Integrantes</Link>
-          <Link to="/faq" className="hover:text-[var(--color-primary)] transition">FAQ</Link>
-        </div>
-      </nav>
-
       <div className="mx-auto max-w-2xl px-4 pt-28 pb-16">
-
-        {/* Voltar */}
         <Link
           to="/integrantes"
           className="flex items-center gap-2 text-sm mb-8 transition hover:opacity-80"
@@ -84,7 +71,6 @@ export default function IntegranteDinamico() {
           ← Voltar para integrantes
         </Link>
 
-        {/* Card principal */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -118,7 +104,6 @@ export default function IntegranteDinamico() {
            <a href={integrante.linkedin} target="_blank" rel="noopener noreferrer" className="rounded-xl px-5 py-2.5 text-sm font-semibold text-white bg-[var(--color-primary)]">LinkedIn</a>
             </div>
         </motion.div>
-        {/* Outros integrantes */}
         <h2 className="text-sm font-semibold mb-4" style={{ color: 'var(--color-text-muted)' }}>
           OUTROS INTEGRANTES
         </h2>
@@ -153,13 +138,8 @@ export default function IntegranteDinamico() {
                     </Link>
             </motion.div>
             ))}
-
         </div>
       </div>
-
-      <footer className="py-8 px-4 border-t border-[var(--color-border)] text-center text-sm text-[var(--color-text-muted)]">
-        © 2026 SpaceWaste — FIAP. Todos os direitos reservados.
-      </footer>
     </div>
   )
 }

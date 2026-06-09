@@ -12,6 +12,7 @@ import ModalAtualizarStatus from '../components/modais/ModalAtualizarStatus'
 import ModalPerfil from '../components/modais/ModalPerfil'
 import ModalErro from '../components/modais/ModalErro'
 
+
 // ─── Fix do ícone padrão do Leaflet no Vite ──────────────────────────────────
 import markerIcon from 'leaflet/dist/images/marker-icon.png'
 import markerShadow from 'leaflet/dist/images/marker-shadow.png'

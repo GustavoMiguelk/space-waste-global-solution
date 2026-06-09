@@ -96,7 +96,6 @@ export default function ModalPerfil({ aberto, onFechar }: ModalPerfilProps) {
               exit={{ scale: 0.9, opacity: 0, y: 20 }}
               transition={{ type: 'spring', stiffness: 300, damping: 25 }}
             >
-              {/* Cabeçalho */}
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-3">
                   <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-green-500/10 text-xl">
@@ -120,7 +119,6 @@ export default function ModalPerfil({ aberto, onFechar }: ModalPerfilProps) {
                 </button>
               </div>
 
-              {/* Sucesso */}
               <AnimatePresence>
                 {sucesso && (
                   <motion.div

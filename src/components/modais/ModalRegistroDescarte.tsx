@@ -122,7 +122,6 @@ export default function ModalRegistroDescarte({ aberto, onFechar, onDescarteRegi
               exit={{ scale: 0.9, opacity: 0, y: 20 }}
               transition={{ type: 'spring', stiffness: 300, damping: 25 }}
             >
-              {/* Cabeçalho */}
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-3">
                   <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-green-500/10 text-xl">
@@ -147,7 +146,6 @@ export default function ModalRegistroDescarte({ aberto, onFechar, onDescarteRegi
               </div>
 
               <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                {/* Descrição */}
                 <div>
                   <label className={labelClass}>Descrição *</label>
                   <textarea
@@ -160,7 +158,6 @@ export default function ModalRegistroDescarte({ aberto, onFechar, onDescarteRegi
                   />
                 </div>
 
-                {/* Categoria */}
                 <div>
                   <label className={labelClass}>Categoria *</label>
                   <select
@@ -176,7 +173,6 @@ export default function ModalRegistroDescarte({ aberto, onFechar, onDescarteRegi
                   </select>
                 </div>
 
-                {/* Peso */}
                 <div>
                   <label className={labelClass}>Peso estimado (kg) *</label>
                   <input
@@ -191,7 +187,6 @@ export default function ModalRegistroDescarte({ aberto, onFechar, onDescarteRegi
                   />
                 </div>
 
-                {/* Localização */}
                 <div>
                   <label className={labelClass}>Localização *</label>
                   <div className="flex gap-2 mb-2">
@@ -225,7 +220,6 @@ export default function ModalRegistroDescarte({ aberto, onFechar, onDescarteRegi
                   </button>
                 </div>
 
-                {/* URL da imagem */}
                 <div>
                   <label className={labelClass}>URL da imagem</label>
                   <input
@@ -238,7 +232,6 @@ export default function ModalRegistroDescarte({ aberto, onFechar, onDescarteRegi
                   />
                 </div>
 
-                {/* Botões */}
                 <div className="flex gap-3 mt-2">
                   <button
                     type="button"
