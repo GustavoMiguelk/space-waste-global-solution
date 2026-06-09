@@ -195,21 +195,24 @@ export default function PaginaInicial() {
 
           <div className="grid sm:grid-cols-3 gap-6">
             {[
-              { nome: 'Integrante 1', rm: 'RM000000', papel: 'Java & Backend' },
-              { nome: 'Integrante 2', rm: 'RM000000', papel: 'Front-end' },
-              { nome: 'Integrante 3', rm: 'RM000000', papel: 'Python & IA' },
+              { nome: 'Manuella Rinaldi', rm: 'RM567915', papel: 'Java & Backend', foto: '/manuella.jpg' },
+              { nome: 'Gustavo Miguel Martins de Oliveira', rm: 'RM566666', papel: 'Front-end', foto: '/gustavo.jpg' },
+              { nome: 'Mariana de Paula Aguiar', rm: 'RM566850', papel: 'Python & IA', foto: '/mariana.jpg' },
             ].map((item, i) => (
               <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 text-center"
-              >
-                <div className="w-14 h-14 rounded-full bg-[var(--color-secondary)]/20 flex items-center justify-center text-2xl mx-auto mb-4">
-                  👤
-                </div>
+                 key={i}
+                 initial={{ opacity: 0, y: 20 }}
+                 whileInView={{ opacity: 1, y: 0 }}
+                 viewport={{ once: true }}
+                 transition={{ duration: 0.5, delay: i * 0.1 }}
+                 className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 text-center"
+                >
+                <img
+                src={item.foto}
+                alt={item.nome}
+                className="w-20 h-20 rounded-full object-cover mx-auto mb-4"
+                style={{ border: '2px solid var(--color-primary)' }}
+              />
                 <p className="font-semibold text-[var(--color-text)]">{item.nome}</p>
                 <p className="text-xs text-[var(--color-text-muted)] mt-1">{item.rm}</p>
                 <p className="text-xs text-[var(--color-primary)] mt-1">{item.papel}</p>
