@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import ModalLogin from '../components/modais/ModalLogin'
 import ModalCadastro from '../components/modais/ModalCadastro'
@@ -12,17 +13,16 @@ export default function PaginaInicial() {
 
       {/* NAVBAR */}
       <nav className="fixed top-0 left-0 right-0 z-40 h-27 flex items-center justify-between px-4 border-b border-[var(--color-border)] bg-[var(--color-bg)]/80 backdrop-blur-md">
-        <div className="flex items-center gap-3">
-        <img src="/logo.png" alt="SpaceWaste" className="h-35 w-auto object-contain" />
-        </div>
+        <Link to="/">
+          <img src="/logo.png" alt="SpaceWaste" className="h-35 w-auto object-contain" />
+        </Link>
         <div className="hidden md:flex items-center gap-8 text-sm text-[var(--color-text-muted)]">
-          <a href="#solucao" className="hover:text-[var(--color-primary)] transition">Solução</a>
-          <a href="#sobre" className="hover:text-[var(--color-primary)] transition">Sobre</a>
-          <a href="#integrantes" className="hover:text-[var(--color-primary)] transition">Integrantes</a>
-          <a href="#faq" className="hover:text-[var(--color-primary)] transition">FAQ</a>
-          <a href="#contato" className="hover:text-[var(--color-primary)] transition">Contato</a>
+          <a href="#solucao"      className="hover:text-[var(--color-primary)] transition">Solução</a>
+          <Link to="/sobre"       className="hover:text-[var(--color-primary)] transition">Sobre</Link>
+          <Link to="/integrantes" className="hover:text-[var(--color-primary)] transition">Integrantes</Link>
+          <Link to="/faq"         className="hover:text-[var(--color-primary)] transition">FAQ</Link>
+          <Link to="/contato"     className="hover:text-[var(--color-primary)] transition">Contato</Link>
         </div>
-
         <div className="flex items-center gap-3">
           <button
             onClick={() => setLoginAberto(true)}
@@ -61,20 +61,20 @@ export default function PaginaInicial() {
             em um ecossistema digital inteligente para combater o descarte irregular de resíduos.
           </p>
 
-          <div className="flex items-center gap-3">
-  <button
-    onClick={() => setLoginAberto(true)}
-    className="px-4 py-2 text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition"
-  >
-    Entrar
-  </button>
-  <button
-    onClick={() => setCadastroAberto(true)}
-    className="px-4 py-2 text-sm font-semibold rounded-xl bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary-dark)] transition"
-  >
-    Cadastrar
-  </button>
-</div>
+          <div className="flex items-center justify-center gap-3">
+            <button
+              onClick={() => setLoginAberto(true)}
+              className="px-4 py-2 text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition"
+            >
+              Entrar
+            </button>
+            <button
+              onClick={() => setCadastroAberto(true)}
+              className="px-4 py-2 text-sm font-semibold rounded-xl bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary-dark)] transition"
+            >
+              Cadastrar
+            </button>
+          </div>
         </motion.div>
 
         {/* Métricas */}
@@ -86,9 +86,9 @@ export default function PaginaInicial() {
         >
           {[
             { valor: '12.4t', label: 'Resíduos coletados' },
-            { valor: '1.2k', label: 'Descartes registrados' },
-            { valor: '340', label: 'Empresas parceiras' },
-            { valor: '98%', label: 'Taxa de resolução' },
+            { valor: '1.2k',  label: 'Descartes registrados' },
+            { valor: '340',   label: 'Empresas parceiras' },
+            { valor: '98%',   label: 'Taxa de resolução' },
           ].map((item, i) => (
             <div
               key={i}
@@ -152,147 +152,6 @@ export default function PaginaInicial() {
               </motion.div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* SOBRE */}
-      <section id="sobre" className="py-24 px-4 border-t border-[var(--color-border)]">
-        <div className="max-w-3xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold text-[var(--color-text)] mb-6">
-              Sobre o projeto
-            </h2>
-            <p className="text-[var(--color-text-muted)] leading-relaxed">
-              O SpaceWaste é um projeto acadêmico desenvolvido na FIAP que une tecnologia,
-              sustentabilidade e inovação. Inspirado em tecnologias do setor espacial como
-              rastreamento geográfico e análise de dados em tempo real, a plataforma traz
-              o conceito de cidades inteligentes para a gestão de resíduos urbanos.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* INTEGRANTES */}
-      <section id="integrantes" className="py-24 px-4 border-t border-[var(--color-border)]">
-        <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-3xl md:text-4xl font-bold text-[var(--color-text)] mb-4">
-              Integrantes
-            </h2>
-            <p className="text-[var(--color-text-muted)]">Time responsável pelo desenvolvimento.</p>
-          </motion.div>
-
-          <div className="grid sm:grid-cols-3 gap-6">
-            {[
-              { nome: 'Manuella Rinaldi', rm: 'RM567915', papel: 'Java & Backend', foto: '/manuella.jpg' },
-              { nome: 'Gustavo Miguel Martins de Oliveira', rm: 'RM566666', papel: 'Front-end', foto: '/gustavo.jpg' },
-              { nome: 'Mariana de Paula Aguiar', rm: 'RM566850', papel: 'Python & IA', foto: '/mariana.jpg' },
-            ].map((item, i) => (
-              <motion.div
-                 key={i}
-                 initial={{ opacity: 0, y: 20 }}
-                 whileInView={{ opacity: 1, y: 0 }}
-                 viewport={{ once: true }}
-                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                 className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 text-center"
-                >
-                <img
-                src={item.foto}
-                alt={item.nome}
-                className="w-20 h-20 rounded-full object-cover mx-auto mb-4"
-                style={{ border: '2px solid var(--color-primary)' }}
-              />
-                <p className="font-semibold text-[var(--color-text)]">{item.nome}</p>
-                <p className="text-xs text-[var(--color-text-muted)] mt-1">{item.rm}</p>
-                <p className="text-xs text-[var(--color-primary)] mt-1">{item.papel}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section id="faq" className="py-24 px-4 border-t border-[var(--color-border)]">
-        <div className="max-w-3xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-3xl md:text-4xl font-bold text-[var(--color-text)] mb-4">
-              Perguntas frequentes
-            </h2>
-          </motion.div>
-
-          <div className="flex flex-col gap-4">
-            {[
-              {
-                pergunta: 'Como faço para registrar um descarte?',
-                resposta: 'Após criar sua conta como cidadão, acesse o Dashboard e clique em "Registrar Descarte". Informe a localização, categoria e foto do resíduo.',
-              },
-              {
-                pergunta: 'Como uma empresa pode participar?',
-                resposta: 'Empresas e cooperativas podem se cadastrar e visualizar os descartes disponíveis próximos à sua área de atuação.',
-              },
-              {
-                pergunta: 'A classificação por IA é automática?',
-                resposta: 'Sim. Ao enviar a foto do resíduo, nossa IA analisa a imagem e sugere automaticamente a categoria correta do material.',
-              },
-              {
-                pergunta: 'O sistema é gratuito?',
-                resposta: 'Sim, o SpaceWaste é uma plataforma acadêmica de acesso livre desenvolvida na FIAP.',
-              },
-            ].map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.1 }}
-                className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6"
-              >
-                <p className="font-semibold text-[var(--color-text)] mb-2">{item.pergunta}</p>
-                <p className="text-sm text-[var(--color-text-muted)]">{item.resposta}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CONTATO */}
-      <section id="contato" className="py-24 px-4 border-t border-[var(--color-border)]">
-        <div className="max-w-xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold text-[var(--color-text)] mb-4">
-              Contato
-            </h2>
-            <p className="text-[var(--color-text-muted)] mb-8">
-              Dúvidas ou sugestões? Entre em contato com a equipe SpaceWaste.
-            </p>
-            
-              <a  href="mailto:contato@spacewaste.com"
-  className="inline-block px-8 py-3.5 rounded-xl bg-[var(--color-primary)] text-white font-semibold text-sm hover:bg-[var(--color-primary-dark)] transition">
-    contato@spacewaste.com
-  </a>
-          </motion.div>
         </div>
       </section>
 
