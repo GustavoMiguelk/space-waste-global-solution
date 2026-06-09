@@ -130,8 +130,12 @@ export default function ModalAtualizarStatus({ coleta, onFechar, onSucesso }: Pr
       </motion.div>
 
       {modalErro && (
-        <ModalErro mensagem={erroMsg} onFechar={() => setModalErro(false)} />
-      )}
+  <ModalErro
+    aberto={modalErro}
+    mensagem={erroMsg}
+    onFechar={() => setModalErro(false)}
+  />
+)}
     </>
   )
 }

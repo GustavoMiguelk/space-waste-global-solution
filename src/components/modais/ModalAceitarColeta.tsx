@@ -118,17 +118,23 @@ export default function ModalAceitarColeta({ descarte, onFechar, onSucesso }: Pr
 
       {/* Confirmação */}
       {confirmando && (
-        <ModalConfirmacao
-          mensagem={`Deseja confirmar a coleta do descarte "${descarte.descricao}"?`}
-          onConfirmar={handleConfirmar}
-          onCancelar={() => setConfirmando(false)}
-        />
-      )}
+  <ModalConfirmacao
+    aberto={confirmando}
+    mensagem={`Deseja confirmar a coleta do descarte "${descarte.descricao}"?`}
+    onConfirmar={handleConfirmar}
+    onFechar={() => setConfirmando(false)}
+  />
+)}
+
 
       {/* Erro */}
-      {modalErro && (
-        <ModalErro mensagem={erroMsg} onFechar={() => setModalErro(false)} />
-      )}
+    {modalErro && (
+      <ModalErro
+        aberto={modalErro}
+        mensagem={erroMsg}
+        onFechar={() => setModalErro(false)}
+      />
+    )}
     </>
   )
 }

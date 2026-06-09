@@ -118,12 +118,18 @@ export default function DashboardEmpresa() {
         className="flex items-center justify-between px-6 py-4 border-b"
         style={{ background: 'var(--color-surface)', borderColor: 'var(--color-border)' }}
       >
-        <div className="flex items-center gap-3">
-          <img src="/src/assets/logo.png" alt="SpaceWaste" className="h-8 w-8" />
-          <span className="text-lg font-bold" style={{ color: 'var(--color-primary)' }}>
-            SpaceWaste
-          </span>
-        </div>
+      <div className="flex items-center gap-3">
+  <div style={{ background: '#fff', borderRadius: '10px', padding: '2px 6px' }}>
+    <img 
+      src="/logo.png" 
+      alt="SpaceWaste" 
+      style={{ height: '32px', width: 'auto', display: 'block' }}
+    />
+  </div>
+  <span className="text-lg font-bold" style={{ color: 'var(--color-primary)' }}>
+    SpaceWaste
+  </span>
+</div>
 
         <div className="flex items-center gap-4">
           <button
@@ -339,11 +345,18 @@ export default function DashboardEmpresa() {
           />
         )}
         {modalPerfil && (
-          <ModalPerfil onFechar={() => setModalPerfil(false)} />
-        )}
+  <ModalPerfil
+    aberto={modalPerfil}
+    onFechar={() => setModalPerfil(false)}
+  />
+)}
         {modalErro && (
-          <ModalErro mensagem={erroMsg} onFechar={() => setModalErro(false)} />
-        )}
+  <ModalErro
+    aberto={modalErro}
+    mensagem={erroMsg}
+    onFechar={() => setModalErro(false)}
+  />
+)}
       </AnimatePresence>
     </div>
   )

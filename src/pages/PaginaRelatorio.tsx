@@ -124,11 +124,17 @@ export default function PaginaRelatorios() {
         style={{ background: 'var(--color-surface)', borderColor: 'var(--color-border)' }}
       >
         <div className="flex items-center gap-3">
-          <img src="/src/assets/logo.png" alt="SpaceWaste" className="h-8 w-8" />
-          <span className="text-lg font-bold" style={{ color: 'var(--color-primary)' }}>
-            SpaceWaste — Relatórios
-          </span>
-        </div>
+  <div style={{ background: '#fff', borderRadius: '10px', padding: '2px 6px' }}>
+    <img 
+      src="/logo.png" 
+      alt="SpaceWaste" 
+      style={{ height: '32px', width: 'auto', display: 'block' }}
+    />
+  </div>
+  <span className="text-lg font-bold" style={{ color: 'var(--color-primary)' }}>
+    SpaceWaste — Relatórios
+  </span>
+</div>
         <button
           onClick={() => navigate(empresa ? '/empresa' : '/dashboard')}
           className="text-sm px-4 py-2 rounded-lg border transition-colors hover:bg-white/5"
