@@ -1,4 +1,4 @@
-# 🌍 SpaceWaste — Gestão Inteligente de Resíduos Urbanos
+# 🌍 SpaceWaste — Gestão de Resíduos Urbanos
 
 > Plataforma digital que conecta cidadãos, empresas de coleta e órgãos públicos para combater o descarte irregular de resíduos urbanos, utilizando geolocalização, e análise de dados em tempo real.
 
@@ -128,7 +128,7 @@ space-waste-frontend/
 
 ```bash
 # 1. Clone o repositório
-git clone https://github.com/SEU_USUARIO/space-waste-global-solution.git
+git clone https://github.com/GustavoMiguelk/space-waste-global-solution.git
 
 # 2. Entre na pasta do projeto
 cd space-waste-global-solution
