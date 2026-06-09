@@ -1,6 +1,6 @@
 # 🌍 SpaceWaste — Gestão Inteligente de Resíduos Urbanos
 
-> Plataforma digital que conecta cidadãos, empresas de coleta e órgãos públicos para combater o descarte irregular de resíduos urbanos, utilizando geolocalização, inteligência artificial e análise de dados em tempo real.
+> Plataforma digital que conecta cidadãos, empresas de coleta e órgãos públicos para combater o descarte irregular de resíduos urbanos, utilizando geolocalização, e análise de dados em tempo real.
 
 ---
 
@@ -78,15 +78,13 @@ space-waste-frontend/
 ## Imagens do Sistema
 
 ### Landing Page
-![Landing Page](https://placehold.co/800x400/050a0e/22c55e?text=Landing+Page+SpaceWaste)
+![Landing Page](public/landingpage.png)
 
 ### Dashboard do Usuário
-![Dashboard Usuário](https://placehold.co/800x400/050a0e/22c55e?text=Dashboard+Usuario)
+![Dashboard Usuário](public/dashboard.png)
 
 ### Mapa Interativo
-![Mapa](https://placehold.co/800x400/050a0e/22c55e?text=Mapa+Interativo+Leaflet)
-
-> 💡 **Substitua as imagens acima por prints reais do sistema antes da entrega.**
+![Mapa](public/mapa.png)
 
 ---
 
@@ -150,8 +148,8 @@ npm run dev
 | Recurso | Link |
 |---------|------|
 |  Repositório GitHub | [https://github.com/GustavoMiguelk/space-waste-global-solution](https://github.com/GustavoMiguelk/space-waste-global-solution) |
-|  Vídeo no YouTube | []() |
-|  Deploy na Vercel | []() |
+|  Vídeo no YouTube | [https://youtu.be/LVZ9B-l0eBs](https://youtu.be/LVZ9B-l0eBs) |
+|  Deploy na Vercel | [https://space-waste-global-solution.vercel.app?_vercel_share=xcPF0s4zsz5Bpu7r8bNOKwXplREWeSw2](https://space-waste-global-solution.vercel.app?_vercel_share=xcPF0s4zsz5Bpu7r8bNOKwXplREWeSw2) |
 
 ---
 
@@ -171,13 +169,5 @@ npm run dev
 
 ---
 
-##  Contato
 
-Dúvidas ou sugestões sobre o projeto? Entre em contato com a equipe:
-
--  **E-mail:** contato@spacewaste.com
--  **LinkedIn:** [Manuella](https://linkedin.com/in/) · [Gustavo](https://linkedin.com/in/) · [Mariana](https://linkedin.com/in/)
--  **GitHub:** [Manuella](https://github.com/) · [Gustavo](https://github.com/) · [Mariana](https://github.com/)
-
----
 

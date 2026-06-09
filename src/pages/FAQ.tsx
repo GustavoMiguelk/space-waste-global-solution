@@ -16,8 +16,8 @@ const perguntas = [
   },
   {
     id: 3,
-    pergunta: 'A classificação por IA é automática?',
-    resposta: 'Sim. Ao enviar a foto do resíduo, nossa IA analisa a imagem e sugere automaticamente a categoria correta do material.',
+    pergunta: 'Quem pode utilizar o SpaceWaste?',
+    resposta: 'O SpaceWaste pode ser utilizado por cidadãos, empresas de coleta, cooperativas de reciclagem e órgãos públicos interessados em melhorar a gestão de resíduos urbanos.',
   },
   {
     id: 4,
