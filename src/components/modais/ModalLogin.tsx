@@ -74,7 +74,7 @@ export default function ModalLogin({ aberto, onFechar, onAbrirCadastro }: ModalL
               transition={{ type: 'spring', stiffness: 300, damping: 25 }}
             >
               <div className="mb-6 flex flex-col items-center gap-2">
-                <img src="../public/logo.png" alt="SpaceWaste" className="h-30" />
+                <img src="/logo.png" alt="SpaceWaste" className="h-30" />
                 <p className="text-sm text-[var(--color-text-muted)]">
                   Acesse sua conta
                 </p>

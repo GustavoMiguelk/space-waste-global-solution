@@ -120,11 +120,11 @@ export default function DashboardEmpresa() {
         style={{ background: 'var(--color-surface)', borderColor: 'var(--color-border)' }}
       >
       <div className="flex items-center gap-3">
-  <div style={{ background: '#fff', borderRadius: '10px', padding: '2px 6px' }}>
+  <div style={{ background: 'rgb(10, 22, 40)', borderRadius: 'px', padding: '2px 6px' }}>
     <img 
       src="/logo.png" 
       alt="SpaceWaste" 
-      style={{ height: '32px', width: 'auto', display: 'block' }}
+      style={{ height: '50px', width: 'auto', display: 'block' }}
     />
   </div>
   <span className="text-lg font-bold" style={{ color: 'var(--color-primary)' }}>

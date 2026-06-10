@@ -2,7 +2,7 @@ import { createContext, useContext, useState, ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 interface Usuario {
-  id: number
+  idUsuario: number
   nome: string
   email: string
   telefone?: string

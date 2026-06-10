@@ -7,7 +7,6 @@ import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import markerIcon from 'leaflet/dist/images/marker-icon.png'
 import markerShadow from 'leaflet/dist/images/marker-shadow.png'
-import logo from '../public/logo.png'
 import ModalRegistroDescarte from '../components/modais/ModalRegistroDescarte'
 import ModalDetalhesDescarte from '../components/modais/ModalDetalheDescarte'
 import ModalPerfil from '../components/modais/ModalPerfil'
@@ -109,22 +108,26 @@ export default function DashboardUsuario() {
   ? descartes
   : descartes.filter(d => d.status === filtroStatus)
 
-  useEffect(() => {
-    obterLocalizacao()
-    api.get('/descartes')
-      .then((todos: Descarte[]) => {
-        const meus = todos.filter(d => d.idUsuario === usuario?.id)
-        setDescartes(meus)
-      })
-      .catch(() => {})
-      .finally(() => setCarregando(false))
-      api.get('/notificacoes')
-      .then((todas: Notificacao[]) => {
-            const minhas = todas.filter(n => n.idUsuario === usuario?.id)
-            setNotificacoes(minhas)
-        })
-        .catch(() => {})
-  }, [])
+useEffect(() => {
+  if (!usuario?.idUsuario) return
+
+  api.get('/descartes')
+    .then((todos: Descarte[]) => {
+      const meus = todos.filter(d => d.idUsuario === usuario.idUsuario)
+      setDescartes(meus)
+    })
+    .catch(() => {})
+    .finally(() => setCarregando(false))
+
+  api.get('/notificacoes')
+    .then((todas: Notificacao[]) => {
+      const minhas = todas.filter(n => n.idUsuario === usuario.idUsuario)
+      setNotificacoes(minhas)
+    })
+    .catch(() => {})
+
+}, [usuario?.idUsuario])
+
 
   function obterLocalizacao() {
     if (!navigator.geolocation) return
